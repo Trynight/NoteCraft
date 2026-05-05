@@ -75,6 +75,11 @@ L["Import (Replace)"] = true
 L["Import error: %s"] = true
 L["Imported %d players."] = true
 L["Export contains personal data of other players. Share only with consent."] = true
+L["Share"] = true
+L["Share Note"] = true
+L["Plain text (chat-friendly):"] = true
+L["NoteCraft share string (importable):"] = true
+L["Date"] = true
 
 -- Options
 L["NoteCraft Options"] = true

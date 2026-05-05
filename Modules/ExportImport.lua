@@ -62,6 +62,60 @@ function EI:ShowExportDialog()
     end)
 end
 
+function EI:ShowSharePlayerDialog(key)
+    local player = NoteCraft.db.global.players[key]
+    if not player then return end
+
+    local payload = { v = 1, players = { [key] = player } }
+    local encoded = encode(payload)
+
+    local f = AceGUI:Create("Frame")
+    f:SetTitle(NoteCraft.L["Share Note"])
+    f:SetLayout("Flow")
+    f:SetWidth(520)
+    f:SetHeight(440)
+    f:SetCallback("OnClose", function(w) AceGUI:Release(w) end)
+
+    local warn = AceGUI:Create("Label")
+    warn:SetText(NoteCraft.L["Export contains personal data of other players. Share only with consent."])
+    warn:SetFullWidth(true)
+    f:AddChild(warn)
+
+    local plainParts = {}
+    plainParts[#plainParts + 1] = NoteCraft.L["Player"] .. ": " .. NoteCraft.Util.DisplayName(player)
+    plainParts[#plainParts + 1] = "Key: " .. key
+    plainParts[#plainParts + 1] = NoteCraft.L["Date"] .. ": " .. (NoteCraft.Util.FormatDate(player.lastSeen) ~= "" and NoteCraft.Util.FormatDate(player.lastSeen) or NoteCraft.L["Never"])
+    if player.title and player.title ~= "" then
+        plainParts[#plainParts + 1] = NoteCraft.L["Title (short)"] .. ": " .. player.title
+    end
+    if player.note and player.note ~= "" then
+        plainParts[#plainParts + 1] = NoteCraft.L["Note"] .. ":\n" .. player.note
+    end
+
+    local plainBox = AceGUI:Create("MultiLineEditBox")
+    plainBox:SetLabel(NoteCraft.L["Plain text (chat-friendly):"])
+    plainBox:SetText(table.concat(plainParts, "\n"))
+    plainBox:DisableButton(true)
+    plainBox:SetFullWidth(true)
+    plainBox:SetNumLines(6)
+    f:AddChild(plainBox)
+
+    local box = AceGUI:Create("MultiLineEditBox")
+    box:SetLabel(NoteCraft.L["NoteCraft share string (importable):"])
+    box:SetText(encoded)
+    box:DisableButton(true)
+    box:SetFullWidth(true)
+    box:SetNumLines(8)
+    f:AddChild(box)
+
+    C_Timer.After(0, function()
+        if box.editBox then
+            box.editBox:HighlightText()
+            box:SetFocus()
+        end
+    end)
+end
+
 function EI:ShowImportDialog(prefill)
     local f = AceGUI:Create("Frame")
     f:SetTitle(NoteCraft.L["NoteCraft Import"])

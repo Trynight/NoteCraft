@@ -88,6 +88,16 @@ function NoteDialog:Show(displayName)
     end)
     f:AddChild(clearBtn)
 
+    local shareBtn = AceGUI:Create("Button")
+    shareBtn:SetText(NoteCraft.L["Share"])
+    shareBtn:SetWidth(120)
+    shareBtn:SetCallback("OnClick", function()
+        if NoteCraft.ExportImport and NoteCraft.ExportImport.ShowSharePlayerDialog then
+            NoteCraft.ExportImport:ShowSharePlayerDialog(key)
+        end
+    end)
+    f:AddChild(shareBtn)
+
     local cancelBtn = AceGUI:Create("Button")
     cancelBtn:SetText(NoteCraft.L["Cancel"])
     cancelBtn:SetWidth(120)
