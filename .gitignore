@@ -1,0 +1,18 @@
+# Build output
+.release/
+*.zip
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*~
+
+# OS junk
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Local Lua language server cache
+.luarc.json
+log/

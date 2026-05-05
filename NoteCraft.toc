@@ -1,0 +1,41 @@
+## Interface: 120000, 120001, 120005
+## Title: NoteCraft
+## Notes: Personal player notes, M+ outcome tracking, LFG screening. 100% local, no network sync.
+## Author: Roberto Cinque
+## Version: 0.1.0
+## SavedVariables: NoteCraftDB
+## IconTexture: Interface\AddOns\NoteCraft\Media\logo.png
+## X-Curse-Project-ID: 0
+## X-License: MIT
+## X-Category: Tooltip, PvE, Group Finder
+## X-Website: https://github.com/trynight/NoteCraft
+## DefaultState: enabled
+
+embeds.xml
+Locale\Locales.xml
+
+Modules\Util.lua
+Modules\Database.lua
+Modules\ScrollHook.lua
+NoteCraft.lua
+Modules\PlayerTracker.lua
+Modules\MythicPlus.lua
+Modules\Tooltip.lua
+Modules\LFG.lua
+Modules\FriendsTooltip.lua
+Modules\WhoTooltip.lua
+Modules\WhoChatFilter.lua
+Modules\GuildRoster.lua
+Modules\Communities.lua
+Modules\Banner.lua
+Modules\Minimap.lua
+Modules\Alert.lua
+Modules\ChatMenu.lua
+Modules\ExportImport.lua
+Modules\UI\NoteDialog.lua
+Modules\UI\PostRunDialog.lua
+Modules\UI\HistoryDialog.lua
+Modules\UI\StatsTab.lua
+Modules\UI\MainWindow.lua
+Modules\UI\Options.lua
+Modules\Commands.lua

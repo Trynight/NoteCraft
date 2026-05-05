@@ -1,0 +1,20 @@
+<Bindings>
+    <Binding name="NOTECRAFT_TOGGLE_WINDOW" header="NOTECRAFT" category="ADDONS">
+        if NoteCraft and NoteCraft.MainWindow then NoteCraft.MainWindow:Toggle() end
+    </Binding>
+    <Binding name="NOTECRAFT_TOGGLE_MINIMAP" category="ADDONS">
+        if NoteCraft and NoteCraft.Minimap then NoteCraft.Minimap:Toggle() end
+    </Binding>
+    <Binding name="NOTECRAFT_OPEN_OPTIONS" category="ADDONS">
+        if NoteCraft and NoteCraft.Options then NoteCraft.Options:Open() end
+    </Binding>
+    <Binding name="NOTECRAFT_NOTE_TARGET" category="ADDONS">
+        if NoteCraft and NoteCraft.NoteDialog and UnitExists("target") and UnitIsPlayer("target") then
+            local name, realm = UnitFullName("target")
+            if name then
+                if not realm or realm == "" then realm = GetNormalizedRealmName() or "" end
+                NoteCraft.NoteDialog:Show(realm ~= "" and (name .. "-" .. realm) or name)
+            end
+        end
+    </Binding>
+</Bindings>
