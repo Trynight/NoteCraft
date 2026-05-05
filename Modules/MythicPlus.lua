@@ -56,15 +56,23 @@ function MP:OnCompleted()
     if (now - lastProcessedTime) < DOUBLE_FIRE_WINDOW then return end
     lastProcessedTime = now
 
-    local mapID, level, _t, onTime
+    local mapID, level, runTimeMs, onTime, upgrades
     if C_ChallengeMode and C_ChallengeMode.GetCompletionInfo then
-        mapID, level, _t, onTime = safeCall(C_ChallengeMode.GetCompletionInfo)
+        mapID, level, runTimeMs, onTime, upgrades = safeCall(C_ChallengeMode.GetCompletionInfo)
     end
     local pending = NoteCraft.db.global.pendingRun
     local members = (pending and pending.members) or NoteCraft.Util.SnapshotGroup()
     mapID = mapID or (pending and pending.mapID)
     level = level or (pending and pending.level)
-    local outcomeFlag = onTime and true or false
+    -- onTime alone is unreliable at this point — fall back to keystoneUpgradeLevels
+    -- (>0 means timed) and to a runTime vs map timeLimit comparison.
+    local outcomeFlag = (onTime == true) or ((upgrades or 0) > 0)
+    if not outcomeFlag and runTimeMs and mapID and C_ChallengeMode and C_ChallengeMode.GetMapUIInfo then
+        local _n, _id, timeLimit = safeCall(C_ChallengeMode.GetMapUIInfo, mapID)
+        if timeLimit and timeLimit > 0 and (runTimeMs / 1000) <= timeLimit then
+            outcomeFlag = true
+        end
+    end
     for _, m in ipairs(members) do
         MP:Record(m.key, mapID, level, outcomeFlag, m.role)
     end
